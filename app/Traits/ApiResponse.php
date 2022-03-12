@@ -9,7 +9,7 @@ trait ApiResponse
 {
     public function success(
         string $message = '',
-        array  $data = []
+        mixed  $data = []
     ): JsonResponse
     {
         return Response::json([
@@ -25,8 +25,8 @@ trait ApiResponse
     ): JsonResponse {
         return Response::json([
             'message' => $message,
-            'errors' => $errors,
             'status_code' => $statusCode,
+            'errors' => $errors,
         ], $statusCode);
     }
 }
