@@ -19712,6 +19712,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     }
+  },
+  methods: {
+    reply: function reply() {
+      console.log('in reply...');
+    }
   }
 });
 
@@ -19981,7 +19986,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.comment.text), 1
   /* TEXT */
-  )])]);
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[0] || (_cache[0] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.reply && $options.reply.apply($options, arguments);
+    }, ["prevent"])),
+    "class": "text-blue-600 visited:text-purple-600 cursor-pointer"
+  }, " reply ")])]);
 }
 
 /***/ }),

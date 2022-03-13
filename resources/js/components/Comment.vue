@@ -5,6 +5,9 @@
             <p>
                 {{ comment.text }}
             </p>
+            <a @click.prevent="reply" class="text-blue-600 visited:text-purple-600 cursor-pointer">
+                reply
+            </a>
         </div>
     </div>
 </template>
@@ -16,7 +19,12 @@ export default {
             type: Object,
             required: true,
         }
-    }
+    },
+    methods: {
+        reply() {
+            console.log('in reply...')
+        }
+    },
 }
 </script>
 
