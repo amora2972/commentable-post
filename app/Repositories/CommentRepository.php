@@ -32,7 +32,11 @@ class CommentRepository implements ICommentRepository, NestableInterface
 
     public function getAllOrderedByLast(int $numberOfPages): LengthAwarePaginator
     {
-        return Comment::orderBy('created_at', 'desc')
+        return Comment::with(['children' => function ($q) {
+            $q->with(['children' => fn($q) => $q->with('children')]);
+        }])
+            ->where('parent_id', null)
+            ->orderBy('created_at', 'desc')
             ->paginate($numberOfPages);
     }
 

@@ -12,6 +12,8 @@ class CommentResource extends JsonResource
             'id' => $this->id,
             'user_name' => $this->user_name,
             'text' => $this->text,
+            'parent_id' => $this->parent_id,
+            'children' => $this->whenLoaded('children'),
         ];
     }
 }

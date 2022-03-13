@@ -19706,7 +19706,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Input */ "./resources/js/components/Input.vue");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {
+    Input: _Input__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
   props: {
     comment: {
       type: Object,
@@ -19714,9 +19719,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    reply: function reply() {
-      console.log('in reply...');
-    }
+    hasChildren: function hasChildren() {
+      return !!this.comment.children;
+    },
+    reply: function reply() {}
   }
 });
 
@@ -19976,12 +19982,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "px-8 py-2 inline-block"
+  "class": "px-8 py-2"
 };
 var _hoisted_2 = {
   "class": "bg-gray-100 p-4 rounded-xl"
 };
+var _hoisted_3 = {
+  key: 0,
+  "class": "m-4"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Comment = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Comment", true);
+
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.comment.user_name), 1
   /* TEXT */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.comment.text), 1
@@ -19991,7 +20003,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.reply && $options.reply.apply($options, arguments);
     }, ["prevent"])),
     "class": "text-blue-600 visited:text-purple-600 cursor-pointer"
-  }, " reply ")])]);
+  }, " reply ")]), $options.hasChildren ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.comment.children, function (com) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_Comment, {
+      key: com.id,
+      comment: com
+    }, null, 8
+    /* PROPS */
+    , ["comment"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
@@ -20010,7 +20031,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "inline-flex flex-col items-baseline max-h-80 overflow-auto",
+  "class": "inline-flex flex-col items-baseline max-h-80 overflow-auto w-full",
   id: "comments-list"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {

@@ -1,5 +1,5 @@
 <template>
-    <div class="inline-flex flex-col items-baseline max-h-80 overflow-auto" id="comments-list">
+    <div class="inline-flex flex-col items-baseline max-h-80 overflow-auto w-full" id="comments-list">
         <Comment v-for="comment in comments" :key="comment.id" :comment="comment"/>
     </div>
 </template>
