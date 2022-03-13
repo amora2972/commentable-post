@@ -5,7 +5,8 @@
             <p>
                 {{ comment.text }}
             </p>
-            <a @click.prevent="reply" class="text-blue-600 visited:text-purple-600 cursor-pointer">
+            <a @click.prevent="reply" class="text-blue-600 visited:text-purple-600 cursor-pointer"
+               v-if="shallDisplayReply(comment.parent_id)">
                 reply
             </a>
         </div>
@@ -18,6 +19,7 @@
 
 <script>
 import Input from "./Input";
+import {mapGetters} from "vuex";
 
 export default {
     components: {Input},
@@ -27,11 +29,41 @@ export default {
             required: true,
         },
     },
+    computed: {
+        ...mapGetters({
+            comments: 'comments/comments',
+        })
+    },
     methods: {
         hasChildren() {
             return !!this.comment.children
         },
         reply() {
+        },
+        findItemNested(arr, itemId, nestingKey) {
+            return arr.reduce((a, item) => {
+                if (a) return a;
+                if (item.id === itemId) return item;
+                if (item[nestingKey]) return this.findItemNested(item[nestingKey], itemId, nestingKey)
+            }, null)
+        },
+        shallDisplayReply(parentId) {
+            if (!parentId) {
+                return true;
+            }
+
+            const comments = [...this.comments];
+            const firstLevel = this.findItemNested(comments, parentId, 'children')
+
+            if (firstLevel && firstLevel.parent_id) {
+                const secondLevel = this.findItemNested(comments, firstLevel.parent_id, 'children')
+
+                if (secondLevel) {
+                    return false
+                }
+            }
+
+            return true
         }
     },
 }
