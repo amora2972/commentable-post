@@ -20563,6 +20563,17 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 
+
+function formatData(arr, value, dataToAdd) {
+  arr.forEach(function (i) {
+    if (i.id === value) {
+      i.children = [dataToAdd].concat(_toConsumableArray(i.children));
+    } else {
+      formatData(i.children, value, dataToAdd);
+    }
+  });
+}
+
 var comments = {
   namespaced: true,
   state: function state() {
@@ -20584,6 +20595,18 @@ var comments = {
       (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data));
     },
     addComment: function addComment(state, data) {
+      if (!data.children) {
+        data.children = [];
+      }
+
+      if (data.parent_id) {
+        var clonedComments = _toConsumableArray(state.comments);
+
+        formatData(clonedComments, data.parent_id, data);
+        state.comments = clonedComments;
+        return;
+      }
+
       state.comments.unshift(data);
     },
     setReplyingTo: function setReplyingTo(state, data) {

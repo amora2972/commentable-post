@@ -1,5 +1,15 @@
 import axios from "axios"
 
+function formatData(arr, value, dataToAdd) {
+    arr.forEach(i => {
+        if(i.id === value) {
+            i.children = [dataToAdd, ...i.children]
+        } else {
+            formatData(i.children, value, dataToAdd);
+        }
+    });
+}
+
 const comments = {
     namespaced: true,
     state: () => ({
@@ -17,6 +27,16 @@ const comments = {
             state.comments.push(...data)
         },
         addComment(state, data) {
+            if (!data.children) {
+                data.children = [];
+            }
+            if (data.parent_id) {
+                var clonedComments = [...state.comments];
+                formatData(clonedComments, data.parent_id, data)
+                state.comments = clonedComments
+                return
+            }
+
             state.comments.unshift(data)
         },
         setReplyingTo(state, data) {
