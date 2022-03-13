@@ -27,17 +27,14 @@ const comments = {
             state.comments.push(...data)
         },
         addComment(state, data) {
-            if (!data.children) {
-                data.children = [];
-            }
+            data.children = [];
             if (data.parent_id) {
                 var clonedComments = [...state.comments];
                 formatData(clonedComments, data.parent_id, data)
                 state.comments = clonedComments
-                return
+            } else {
+                state.comments.unshift(data)
             }
-
-            state.comments.unshift(data)
         },
         setReplyingTo(state, data) {
             state.replyingTo = data

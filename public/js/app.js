@@ -19996,6 +19996,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.$store.dispatch('comments/add', this.comment);
+      this.$store.commit('comments/setReplyingTo', {
+        text: '',
+        id: ''
+      });
       this.comment = {
         user_name: '',
         text: '',
@@ -20595,19 +20599,16 @@ var comments = {
       (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data));
     },
     addComment: function addComment(state, data) {
-      if (!data.children) {
-        data.children = [];
-      }
+      data.children = [];
 
       if (data.parent_id) {
         var clonedComments = _toConsumableArray(state.comments);
 
         formatData(clonedComments, data.parent_id, data);
         state.comments = clonedComments;
-        return;
+      } else {
+        state.comments.unshift(data);
       }
-
-      state.comments.unshift(data);
     },
     setReplyingTo: function setReplyingTo(state, data) {
       state.replyingTo = data;

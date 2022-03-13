@@ -58,6 +58,10 @@ export default {
                 this.comment.parent_id = this.replyingTo.id
             }
             this.$store.dispatch('comments/add', this.comment)
+            this.$store.commit('comments/setReplyingTo', {
+                text: '',
+                id: '',
+            })
             this.comment = {
                 user_name: '',
                 text: '',
