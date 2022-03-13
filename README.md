@@ -2,6 +2,7 @@
 
 ```shell
 cp .env.example .env
+composer install
 ```
 
 ### setup your .env for db
