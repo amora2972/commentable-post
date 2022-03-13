@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Comments\CreateComment;
-use App\Actions\Comments\GetAllPaginatedComments;
+use App\Actions\Comments\GetAllPaginatedCommentsOrderedByLast;
 use App\Http\Requests\CreateCommentRequest;
 use App\Http\Resources\CommentResource;
 use Illuminate\Http\JsonResponse;
@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
 class CommentController extends Controller
 {
     public function index(
-        GetAllPaginatedComments $getAllPaginatedComments
+        GetAllPaginatedCommentsOrderedByLast $getAllPaginatedComments
     ): JsonResponse
     {
         $comments = $getAllPaginatedComments->execute(5);

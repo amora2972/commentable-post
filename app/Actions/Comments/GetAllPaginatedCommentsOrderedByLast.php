@@ -5,7 +5,7 @@ namespace App\Actions\Comments;
 use App\Interfaces\ICommentRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class GetAllPaginatedComments
+class GetAllPaginatedCommentsOrderedByLast
 {
     public function __construct(protected ICommentRepository $commentRepository)
     {
@@ -13,6 +13,6 @@ class GetAllPaginatedComments
 
     public function execute(int $numberOfPages): LengthAwarePaginator
     {
-        return $this->commentRepository->paginate($numberOfPages);
+        return $this->commentRepository->getAllOrderedByLast($numberOfPages);
     }
 }

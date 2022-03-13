@@ -30,6 +30,12 @@ class CommentRepository implements ICommentRepository, NestableInterface
         return Comment::paginate($numberOfPages);
     }
 
+    public function getAllOrderedByLast(int $numberOfPages): LengthAwarePaginator
+    {
+        return Comment::orderBy('created_at', 'desc')
+            ->paginate($numberOfPages);
+    }
+
     public function checkNested(int|string $parentId): bool
     {
         return !Comment::where('comments.id', $parentId)
