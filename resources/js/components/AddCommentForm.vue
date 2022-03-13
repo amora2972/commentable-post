@@ -42,6 +42,7 @@ export default {
             comment: {
                 user_name: '',
                 text: '',
+                parent_id: null,
             }
         }
     },
@@ -57,6 +58,11 @@ export default {
                 this.comment.parent_id = this.replyingTo.id
             }
             this.$store.dispatch('comments/add', this.comment)
+            this.comment = {
+                user_name: '',
+                text: '',
+                parent_id: null,
+            }
         }
     }
 }

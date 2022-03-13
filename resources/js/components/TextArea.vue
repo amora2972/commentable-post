@@ -1,7 +1,8 @@
 <template>
     <textarea class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               :placeholder="placeholder"
-              @change="$emit('update:modelValue', $event.target.value)">{{ modelValue }}</textarea>
+              :value="modelValue"
+              @change="$emit('update:modelValue', $event.target.value)"></textarea>
 </template>
 
 <script>
