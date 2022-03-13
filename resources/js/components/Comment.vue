@@ -39,6 +39,10 @@ export default {
             return !!this.comment.children
         },
         reply() {
+            this.$store.commit('comments/setReplyingTo', {
+                text: 'Replying to: ' + this.comment.user_name + ' ' + this.comment.text,
+                id: this.comment.id
+            })
         },
         findItemNested(arr, itemId, nestingKey) {
             return arr.reduce((a, item) => {

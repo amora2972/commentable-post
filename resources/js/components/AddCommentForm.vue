@@ -2,6 +2,13 @@
     <div>
         <div class="px-8 pb-2 flex flex-col gap-5">
 
+            <div v-if="replyingTo.id" class="bg-gray-200 p-8">
+                <p>
+                    {{ replyingTo.text }}
+                </p>
+                <button @click="removeReplyingTo">x</button>
+            </div>
+
             <Input placeholder="User Name" v-model="comment.user_name"/>
 
             <div class="flex justify-center items-center gap-5">
@@ -21,9 +28,15 @@
 <script>
 import TextArea from "./TextArea";
 import Input from "./Input";
+import {mapGetters} from "vuex";
 
 export default {
     components: {TextArea, Input},
+    computed: {
+        ...mapGetters({
+            replyingTo: 'comments/replyingTo'
+        })
+    },
     data() {
         return {
             comment: {
@@ -33,7 +46,16 @@ export default {
         }
     },
     methods: {
+        removeReplyingTo() {
+            this.$store.commit('comments/setReplyingTo', {
+                id: '',
+                text: '',
+            })
+        },
         postComment() {
+            if (this.replyingTo.id) {
+                this.comment.parent_id = this.replyingTo.id
+            }
             this.$store.dispatch('comments/add', this.comment)
         }
     }

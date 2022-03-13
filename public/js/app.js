@@ -19671,6 +19671,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _TextArea__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TextArea */ "./resources/js/components/TextArea.vue");
 /* harmony import */ var _Input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Input */ "./resources/js/components/Input.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -19678,6 +19686,9 @@ __webpack_require__.r(__webpack_exports__);
     TextArea: _TextArea__WEBPACK_IMPORTED_MODULE_0__["default"],
     Input: _Input__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)({
+    replyingTo: 'comments/replyingTo'
+  })),
   data: function data() {
     return {
       comment: {
@@ -19687,7 +19698,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    removeReplyingTo: function removeReplyingTo() {
+      this.$store.commit('comments/setReplyingTo', {
+        id: '',
+        text: ''
+      });
+    },
     postComment: function postComment() {
+      if (this.replyingTo.id) {
+        this.comment.parent_id = this.replyingTo.id;
+      }
+
       this.$store.dispatch('comments/add', this.comment);
     }
   }
@@ -19745,7 +19766,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     hasChildren: function hasChildren() {
       return !!this.comment.children;
     },
-    reply: function reply() {},
+    reply: function reply() {
+      this.$store.commit('comments/setReplyingTo', {
+        text: 'Replying to: ' + this.comment.user_name + ' ' + this.comment.text,
+        id: this.comment.id
+      });
+    },
     findItemNested: function findItemNested(arr, itemId, nestingKey) {
       var _this = this;
 
@@ -19985,6 +20011,10 @@ var _hoisted_1 = {
   "class": "px-8 pb-2 flex flex-col gap-5"
 };
 var _hoisted_2 = {
+  key: 0,
+  "class": "bg-gray-200 p-8"
+};
+var _hoisted_3 = {
   "class": "flex justify-center items-center gap-5"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -19992,17 +20022,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   var _component_TextArea = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("TextArea");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_ctx.replyingTo.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.replyingTo.text), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.removeReplyingTo && $options.removeReplyingTo.apply($options, arguments);
+    })
+  }, "x")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Input, {
     placeholder: "User Name",
     modelValue: $data.comment.user_name,
-    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.comment.user_name = $event;
     })
   }, null, 8
   /* PROPS */
-  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TextArea, {
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_TextArea, {
     modelValue: $data.comment.text,
-    "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
       return $data.comment.text = $event;
     }),
     placeholder: "Type Comment..."
@@ -20011,7 +20047,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline",
     type: "button",
-    onClick: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onClick: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.postComment && $options.postComment.apply($options, arguments);
     }, ["prevent"]))
   }, " Post ")])])]);
@@ -20239,7 +20275,11 @@ var comments = {
   namespaced: true,
   state: function state() {
     return {
-      comments: []
+      comments: [],
+      replyingTo: {
+        text: '',
+        id: ''
+      }
     };
   },
   mutations: {
@@ -20252,7 +20292,10 @@ var comments = {
       (_state$comments = state.comments).push.apply(_state$comments, _toConsumableArray(data));
     },
     addComment: function addComment(state, data) {
-      state.comments.push(data);
+      state.comments.unshift(data);
+    },
+    setReplyingTo: function setReplyingTo(state, data) {
+      state.replyingTo = data;
     }
   },
   actions: {
@@ -20321,6 +20364,9 @@ var comments = {
   getters: {
     comments: function comments(state) {
       return state.comments;
+    },
+    replyingTo: function replyingTo(state) {
+      return state.replyingTo;
     }
   }
 };

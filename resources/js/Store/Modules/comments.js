@@ -4,6 +4,10 @@ const comments = {
     namespaced: true,
     state: () => ({
         comments: [],
+        replyingTo: {
+            text: '',
+            id: '',
+        }
     }),
     mutations: {
         setComments(state, data) {
@@ -13,8 +17,11 @@ const comments = {
             state.comments.push(...data)
         },
         addComment(state, data) {
-            state.comments.push(data)
-        }
+            state.comments.unshift(data)
+        },
+        setReplyingTo(state, data) {
+            state.replyingTo = data
+        },
     },
     actions: {
         async fetch({commit}, page = 1) {
@@ -40,6 +47,9 @@ const comments = {
     getters: {
         comments(state) {
             return state.comments
+        },
+        replyingTo(state) {
+            return state.replyingTo
         }
     }
 }

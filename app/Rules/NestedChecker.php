@@ -9,13 +9,16 @@ class NestedChecker implements Rule
 {
     public function __construct(
         protected NestableInterface $repo,
-        protected int|string        $parentId
+        protected int|string|null        $parentId
     )
     {
     }
 
     public function passes($attribute, $value)
     {
+        if (!$this->parentId) {
+            return true;
+        }
         return $this->repo->checkNested($this->parentId);
     }
 
