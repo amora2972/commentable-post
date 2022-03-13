@@ -129,6 +129,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'check_nested' => 'The comments cannot be more than 3 levels nested',
 
     /*
     |--------------------------------------------------------------------------

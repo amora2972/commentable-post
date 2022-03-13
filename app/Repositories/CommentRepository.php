@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Interfaces\ICommentRepository;
+use App\Interfaces\NestableInterface;
 use App\Models\Comment;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class CommentRepository implements ICommentRepository
+class CommentRepository implements ICommentRepository, NestableInterface
 {
     public function get(): Collection
     {
@@ -27,5 +28,13 @@ class CommentRepository implements ICommentRepository
     public function paginate(int $numberOfPages): LengthAwarePaginator
     {
         return Comment::paginate($numberOfPages);
+    }
+
+    public function checkNested(int|string $parentId): bool
+    {
+        return !Comment::where('comments.id', $parentId)
+            ->whereHas('parent', function($q) {
+                $q->whereHas('parent');
+            })->count();
     }
 }
